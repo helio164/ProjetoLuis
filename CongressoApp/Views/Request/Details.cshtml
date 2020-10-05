@@ -1,0 +1,126 @@
+﻿@model CongressoApp.Models.RequestViewModel
+@{ var LoggedUser = new CongressoContext().Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));}
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<h4>Request @Html.DisplayFor(model => model.Request.Theme)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.DateTimeFormat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.PriceFormat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Notes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.CreatedAt)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.CreatedAt)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.CurrentLevel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.CurrentLevel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Level1Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Level1Notes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Level2Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Level2Notes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Level3Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Level3Notes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Request.Level4Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Request.Level4Notes)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Ficheiros &amp; Documentos</h4>
+        <hr />
+        <ul>
+            @foreach (var file in Model.Documents)
+            {
+                <li>
+                    @Html.ActionLink(file.Name, "DownloadFile", new { fileName = file.Name, filePath = file.Path })
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<p>
+    @if ((int)LoggedUser.UserCategory == Model.Request.CurrentLevel || LoggedUser.Id == Model.Request.CreatedBy?.Id)
+    {
+        if (LoggedUser.Id == Model.Request.ApproverLevel1?.Id ||
+            LoggedUser.Id == Model.Request.ApproverLevel2?.Id ||
+             LoggedUser.Id == Model.Request.ApproverLevel3?.Id ||
+              LoggedUser.Id == Model.Request.ApproverLevel4?.Id)
+        {
+            @Html.ActionLink("Aprovar", "Approve", new { id = Model.Request.Id }) @:|
+        }
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Request.Id }) @:|
+    }
+
+    @Html.ActionLink("Voltar para Lista", "Index")
+</p>

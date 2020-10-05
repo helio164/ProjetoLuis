@@ -1,0 +1,125 @@
+﻿@model CongressoApp.Models.UsersViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit User</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.HiddenFor(model => model.User.Id)
+                @Html.HiddenFor(model => model.User.UserName)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.UserFirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.User.UserFirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserFirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.UserLastName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.User.UserLastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.User.UserLastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Telemóvel", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.User.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.User.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.User.UserSignature, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.User.UserSignature, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.User.UserSignature, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.SysAdmin, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.User.SysAdmin)
+                        @Html.ValidationMessageFor(model => model.User.SysAdmin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
+                <div class="form-group">
+                    @Html.Label("IsActive", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.User.EmailConfirmed)
+                            @Html.ValidationMessageFor(model => model.User.EmailConfirmed, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.User.UserCategory, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @{
+                            var selectList = new SelectList(
+                                new List<SelectListItem>
+                                {
+                                                                    new SelectListItem {Text = "Delegado", Value = CongressoApp.Models.UserCategory.DEL.ToString()},
+                                                                    new SelectListItem {Text = "Gestor Regional de Vendas", Value = CongressoApp.Models.UserCategory.GRV.ToString()},
+                                                                    new SelectListItem {Text = "Gestor de Produto", Value = CongressoApp.Models.UserCategory.GP.ToString()},
+                                                                    new SelectListItem {Text = "Direção de Maketing", Value = CongressoApp.Models.UserCategory.DM.ToString()},
+                                                                    new SelectListItem {Text = "Administrativa", Value = CongressoApp.Models.UserCategory.ADM.ToString()},
+                                                                    new SelectListItem {Text = "SysAdmin", Value = "99"},
+                                }, "Value", "Text", Model.User.UserCategory);
+                        }
+                        @Html.DropDownListFor(model => model.User.UserCategory, selectList, "------ Seleccione -----", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.User.UserApproverId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("User.UserApproverId", Model.UsersList, "------ Seleccione -----", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+<div>
+    @Html.ActionLink("Voltar para Lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

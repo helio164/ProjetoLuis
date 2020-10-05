@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-center text-white bg-dark">
+            <div class="card-header">
+                Gerir Utilizadores
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Index","Users", new { area="SysAdmin" })" class="btn btn-primary">Users</a>
+            </div>
+        </div>
+    </div>
+</div>
+

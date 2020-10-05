@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-center bg-light">
+            <div class="card-header">
+                Lista de Fichas de Patrocínio
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text">Ir para a lista de fichas de patrocínio</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Index","Request")" class="btn btn-primary">Ver Fichas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center text-white bg-dark">
+            <div class="card-header">
+                Lista de Utilizadores
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text">Ir para a lista de utilizadores</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Index","Users")" class="btn btn-primary">Ver Utilizadores</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-center text-white bg-dark">
+            <div class="card-header">
+                Fazer novo pedido
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text">Criar um novo pedido de patrocínio</p>
+            </div>
+            <div class="card-footer text-muted">
+                <a href="@Url.Action("Create","Request")" class="btn btn-primary">Criar ficha</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+            <div class="card text-center bg-light">
+                <div class="card-header">
+                    Profissionais
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">Ir para a lista de profissionais</p>
+                </div>
+                <div class="card-footer text-muted">
+                    <a href="@Url.Action("Index","Professionals")" class="btn btn-primary">Ver Profissionais</a>
+                </div>
+            </div>
+        </div>
+</div>
+

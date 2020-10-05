@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My Scientific Training Management</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @Html.ActionLink("My Scientific Training Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav mr-auto">
+                    @*<li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class= "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content pt-2">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My Scientific Training Management</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

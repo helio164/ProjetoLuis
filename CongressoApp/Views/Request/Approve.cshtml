@@ -1,0 +1,257 @@
+﻿@model CongressoApp.Models.Request
+
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Approve</h2>
+
+<h4>Request</h4>
+<hr />
+<div class="row">
+    <dl class="dl-horizontal col-md-6">
+        <dt>
+            @Html.DisplayNameFor(model => model.Theme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeFormat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceFormat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        @*----------------------------------------------------------------------------------------------------------------------------------------*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+    </dl>
+    <div class="dl-horizontal col-md-6">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentLevel)
+        </dt>
+
+        <div>
+            @Html.DisplayFor(model => model.CurrentLevel)
+        </div>
+        @*----------------------------------------------------------------------------------------------------------------------------------------*@
+        @using (Html.BeginForm("Approve", "Request", FormMethod.Post, new { id = "RequestForm" }))
+        {
+            if (Model.CurrentLevel >= 1)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Level1Notes)
+                    @Html.Display(Model.StatusLevel1.GetValueOrDefault().ToString())
+                </dt>
+                if (Model.StatusLevel1 != CongressoApp.Models.ApproveStatus.WAITING)
+                {
+                    <div>
+                        @Html.DisplayFor(model => model.Level1Notes)
+                    </div>
+                }
+                else if (Model.StatusLevel1 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel1.Email.Equals(User.Identity.Name))
+                {
+                    <div class="form-group">
+                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @{
+                                var selectList = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Aprovar", Value = CongressoApp.Models.ApproveStatus.APPROVED.ToString()},
+                                        new SelectListItem {Text = "Aprovado Condicionado", Value = CongressoApp.Models.ApproveStatus.MISSINGINFO.ToString()},
+                                        new SelectListItem {Text = "Desaprovar", Value = CongressoApp.Models.ApproveStatus.DISAPPROVED.ToString()},
+                                    }, "Value", "Text", Model.StatusLevel1);
+                            }
+                            @Html.DropDownListFor(model => model.StatusLevel1, selectList, "------ Seleccione -----", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.EditorFor(model => model.Level1Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submeter" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            }
+            if (Model.CurrentLevel >= 2)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Level2Notes)
+                    @Html.Display(Model.StatusLevel2?.ToString())
+                </dt>
+
+                if (Model.StatusLevel2 != CongressoApp.Models.ApproveStatus.WAITING)
+                {
+                    <div>
+                        @Html.DisplayFor(model => model.Level2Notes)
+                    </div>
+                }
+                else if (Model.StatusLevel2 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel2.Email.Equals(User.Identity.Name))
+                {
+                    <div class="form-group">
+                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @{
+                                var selectList = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                                        new SelectListItem {Text = "Aprovar", Value = CongressoApp.Models.ApproveStatus.APPROVED.ToString()},
+                                                        new SelectListItem {Text = "Aprovado Condicionado", Value = CongressoApp.Models.ApproveStatus.MISSINGINFO.ToString()},
+                                                        new SelectListItem {Text = "Desaprovar", Value = CongressoApp.Models.ApproveStatus.DISAPPROVED.ToString()},
+                                    }, "Value", "Text", Model.StatusLevel2);
+                            }
+                            @Html.DropDownListFor(model => model.StatusLevel2, selectList, "------ Seleccione -----", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.EditorFor(model => model.Level2Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submeter" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            }
+            if (Model.CurrentLevel >= 3)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Level3Notes)
+                    @Html.Display(Model.StatusLevel3.GetValueOrDefault().ToString())
+                </dt>
+
+                if (Model.StatusLevel3 != CongressoApp.Models.ApproveStatus.WAITING)
+                {
+                    <div>
+                        @Html.DisplayFor(model => model.Level3Notes)
+                    </div>
+                }
+                else if (Model.StatusLevel3 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel3.Email.Equals(User.Identity.Name))
+                {
+
+                    <div class="form-group">
+                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @{
+                                var selectList = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                                        new SelectListItem {Text = "Aprovar", Value = CongressoApp.Models.ApproveStatus.APPROVED.ToString()},
+                                                        new SelectListItem {Text = "Aprovado Condicionado", Value = CongressoApp.Models.ApproveStatus.MISSINGINFO.ToString()},
+                                                        new SelectListItem {Text = "Desaprovar", Value = CongressoApp.Models.ApproveStatus.DISAPPROVED.ToString()},
+                                    }, "Value", "Text", Model.StatusLevel3);
+                            }
+                            @Html.DropDownListFor(model => model.StatusLevel3, selectList, "------ Seleccione -----", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.EditorFor(model => model.Level3Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submeter" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            }
+            if (Model.CurrentLevel >= 4)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Level4Notes)
+                    @Html.Display(Model.StatusLevel4.GetValueOrDefault().ToString())
+                </dt>
+
+                if (Model.StatusLevel4 != CongressoApp.Models.ApproveStatus.WAITING)
+                {
+                    <div>
+                        @Html.DisplayFor(model => model.Level4Notes)
+                    </div>
+                }
+                else if (Model.StatusLevel4 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel4.Email.Equals(User.Identity.Name))
+                {
+                    <div class="form-group">
+                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-10">
+                            @{
+                                var selectList = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                                new SelectListItem {Text = "Aprovar", Value = CongressoApp.Models.ApproveStatus.APPROVED.ToString()},
+                                                new SelectListItem {Text = "Aprovado Condicionado", Value = CongressoApp.Models.ApproveStatus.MISSINGINFO.ToString()},
+                                                new SelectListItem {Text = "Desaprovar", Value = CongressoApp.Models.ApproveStatus.DISAPPROVED.ToString()},
+                                    }, "Value", "Text", Model.StatusLevel4);
+                            }
+                            @Html.DropDownListFor(model => model.StatusLevel4, selectList, "------ Seleccione -----", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.EditorFor(model => model.Level4Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submeter" class="btn btn-primary" />
+                        </div>
+                    </div>
+                }
+            }
+
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar para Lista", "Index")
+</p>

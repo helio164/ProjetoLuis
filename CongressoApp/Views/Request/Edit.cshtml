@@ -1,0 +1,127 @@
+﻿@model CongressoApp.Models.RequestViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Request", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.HiddenFor(model => model.Request.Id)
+
+            <div class="form-horizontal">
+                <h4>Ficha Patrocínio Formação Científica</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Request.Theme, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Request.Theme, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Request.Location, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Request.Location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.Request.Date)
+                        @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Request.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Request.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Request.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Request.Notes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Request.Active)
+                            @Html.ValidationMessageFor(model => model.Request.Active, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Request.Professionals[0].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Request.Professionals[0].DropdownFormatName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Request.Professionals[0].DropdownFormatName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <h4>Ficheiros &amp; Documentos</h4>
+                <hr />
+                <form action="/file-upload" class="dropzone">
+                    <div class="fallback">
+                        <input name="files" id="files" type="file" multiple />
+                    </div>
+                </form>
+                <ul>
+                    @foreach (var file in Model.Documents)
+                    {
+                        <li>
+                            @Html.ActionLink(file.Name, "DownloadFile", new { fileName = file.Name, filePath = file.Path, htmlAttributes = new { target="_blank" } })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar para Lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        })
+    </script>
+}

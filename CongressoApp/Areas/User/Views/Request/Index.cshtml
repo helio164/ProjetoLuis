@@ -1,0 +1,244 @@
+﻿@model CongressoApp.Models.RequestsIndexViewModel
+
+@{
+    ViewBag.Title = "FICHAS DE PATROCINIO FORMAÇÃO CIENTIFICA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>FICHAS DE PATROCINIO FORMAÇÃO CIENTIFICA</h2>
+<hr />
+<div id="requestLists" class="row">
+    <div class="col-md-2 border-right">
+        <h3>GRV</h3>
+        <div class="card bg-light mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        <div class="card bg-light mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        @foreach (var item in Model.Level1)
+        {
+            <div class="card mb-1 @(item.StatusLevel1==CongressoApp.Models.ApproveStatus.MISSINGINFO?"bg-warning text-white":item.StatusLevel1==CongressoApp.Models.ApproveStatus.DISAPPROVED?"bg-danger text-white":item.StatusLevel1==CongressoApp.Models.ApproveStatus.APPROVED?"bg-success text-white":"bg-light")">
+                <div class="card-header">
+                    <small>@item.Theme (<b>@(item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Congresso" : (item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Doctor Meeting" : "Equipamento"))</b>)</small>
+                </div>
+                <div class="card-body">
+                    <p class="m-0"><small><b>@item.DateTimeFormat</b></small></p>
+                    <p class=""><span class="card-title">@item.Location</span></p>
+                    <p class="m-0 card-body-detail">Valor: <small class="card-text">@if (item.Price.HasValue) { item.Price.Value.ToString().Append<char>('€'); }</small></p>
+                    <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                    @Html.ActionLink("Abrir", "Details", new { id = item.Id }, new { @class = "btn btn-outline-dark card-body-detail" })
+                    <p><small class="float-right">@item.CreatedBy.UserFirstName @item.CreatedBy.UserLastName, @item.CreatedAt</small></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2 border-right">
+        <h3>GP</h3>
+        <div class="card bg-warning text-white mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em Geriatria (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        <div class="card bg-light mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        @foreach (var item in Model.Level2)
+        {
+            <div class="card mb-1 @(item.StatusLevel2==CongressoApp.Models.ApproveStatus.MISSINGINFO?"bg-warning text-white":item.StatusLevel2==CongressoApp.Models.ApproveStatus.DISAPPROVED?"bg-danger text-white":item.StatusLevel2==CongressoApp.Models.ApproveStatus.APPROVED?"bg-success text-white":"bg-light")">
+                <div class="card-header">
+                    <small>@item.Theme (<b>@(item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Congresso" : (item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Doctor Meeting" : "Equipamento"))</b>)</small>
+                </div>
+                <div class="card-body">
+                    <p class="m-0"><small><b>@item.DateTimeFormat</b></small></p>
+                    <p class=""><span class="card-title">@item.Location</span></p>
+                    <p class="m-0 card-body-detail">Valor: <small class="card-text">@if (item.Price.HasValue) { item.Price.Value.ToString().Append<char>('€'); }</small></p>
+                    <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                    @Html.ActionLink("Abrir", "Details", new { id = item.Id }, new { @class = "btn btn-outline-dark card-body-detail" })
+                    <p><small class="float-right">@item.CreatedBy.UserFirstName @item.CreatedBy.UserLastName, @item.CreatedAt</small></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2 border-right">
+        <h3>DM</h3>
+        <div class="card bg-light mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        <div class="card bg-danger text-white mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em Oftalmologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        @foreach (var item in Model.Level3)
+        {
+            <div class="card mb-1 @(item.StatusLevel3==CongressoApp.Models.ApproveStatus.MISSINGINFO?"bg-warning text-white":item.StatusLevel3==CongressoApp.Models.ApproveStatus.DISAPPROVED?"bg-danger text-white":item.StatusLevel3==CongressoApp.Models.ApproveStatus.APPROVED?"bg-success text-white":"bg-light")">
+                <div class="card-header">
+                    <small>@item.Theme (<b>@(item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Congresso" : (item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Doctor Meeting" : "Equipamento"))</b>)</small>
+                </div>
+                <div class="card-body">
+                    <p class="m-0"><small><b>@item.DateTimeFormat</b></small></p>
+                    <p class=""><span class="card-title">@item.Location</span></p>
+                    <p class="m-0 card-body-detail">Valor: <small class="card-text">@if (item.Price.HasValue) { item.Price.Value.ToString().Append<char>('€'); }</small></p>
+                    <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                    @Html.ActionLink("Abrir", "Details", new { id = item.Id }, new { @class = "btn btn-outline-dark card-body-detail" })
+                    <p><small class="float-right">@item.CreatedBy.UserFirstName @item.CreatedBy.UserLastName, @item.CreatedAt</small></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2 border-right">
+        <h3>ADM</h3>
+        <div class="card bg-danger text-white mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em Oftalmologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        @foreach (var item in Model.Level4)
+        {
+            <div class="card mb-1 @(item.StatusLevel4==CongressoApp.Models.ApproveStatus.MISSINGINFO?"bg-warning text-white":item.StatusLevel4==CongressoApp.Models.ApproveStatus.DISAPPROVED?"bg-danger text-white":item.StatusLevel4==CongressoApp.Models.ApproveStatus.APPROVED?"bg-success text-white":"bg-light")">
+                <div class="card-header">
+                    <small>@item.Theme (<b>@(item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Congresso" : (item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Doctor Meeting" : "Equipamento"))</b>)</small>
+                </div>
+                <div class="card-body">
+                    <p class="m-0"><small><b>@item.DateTimeFormat</b></small></p>
+                    <p class=""><span class="card-title">@item.Location</span></p>
+                    <p class="m-0 card-body-detail">Valor: <small class="card-text">@if (item.Price.HasValue) { item.Price.Value.ToString().Append<char>('€'); }</small></p>
+                    <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                    @Html.ActionLink("Abrir", "Details", new { id = item.Id }, new { @class = "btn btn-outline-dark card-body-detail" })
+                    <p><small class="float-right">@item.CreatedBy.UserFirstName @item.CreatedBy.UserLastName, @item.CreatedAt</small></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2">
+        <h3>Aprovados</h3>
+        <div class="card bg-success mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        <div class="card bg-success mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        <div class="card bg-success mb-1">
+            <div class="card-header">
+                <small>Curso de Atualização em estomatologia (<b>Congresso</b>)</small>
+            </div>
+            <div class="card-body">
+                <p class="m-0"><small><b>12/11/2020</b></small></p>
+                <p class=""><span class="card-title">Hotel VIP Executive Villa Rica</span></p>
+                <p class="m-0 card-body-detail">Valor: <small class="card-text">80€</small></p>
+                <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                <p><small class="float-right">Mário Cordeiro, 12/09/2020</small></p>
+            </div>
+        </div>
+        @foreach (var item in Model.Accepted)
+        {
+            <div class="card mb-1 @(item.StatusLevel4==CongressoApp.Models.ApproveStatus.MISSINGINFO?"bg-warning text-white":item.StatusLevel4==CongressoApp.Models.ApproveStatus.DISAPPROVED?"bg-danger text-white":item.StatusLevel4==CongressoApp.Models.ApproveStatus.APPROVED?"bg-success text-white":"bg-light")">
+                <div class="card-header">
+                    <small>@item.Theme (<b>@(item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Congresso" : (item.RequestType == (CongressoApp.Models.RequestType.CONGRESSO) ? "Doctor Meeting" : "Equipamento"))</b>)</small>
+                </div>
+                <div class="card-body">
+                    <p class="m-0"><small><b>@item.DateTimeFormat</b></small></p>
+                    <p class=""><span class="card-title">@item.Location</span></p>
+                    <p class="m-0 card-body-detail">Valor: <small class="card-text">@if (item.Price.HasValue) { item.Price.Value.ToString().Append<char>('€'); }</small></p>
+                    <a href="#" class="btn btn-outline-dark card-body-detail">Abrir</a>
+                    @Html.ActionLink("Abrir", "Details", new { id = item.Id }, new { @class = "btn btn-outline-dark card-body-detail" })
+                    <p><small class="float-right">@item.CreatedBy.UserFirstName @item.CreatedBy.UserLastName, @item.CreatedAt</small></p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts{
+
+
+    <script>
+        $(document).ready(function () {
+            $("#requestLists>div.col-md-2").mouseenter(function (e) {
+                $(this).removeClass("col-md-2").addClass("col-md-4");
+                //$(e.target).addClass("col-md-3");
+            }).mouseleave(function (e) {
+                $(this).removeClass("col-md-4").addClass("col-md-2");
+                //$(e.target).removeClass("col-md-3");
+            });
+        });
+    </script>
+
+}
