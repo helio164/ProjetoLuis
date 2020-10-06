@@ -94,7 +94,7 @@
                 else if (Model.StatusLevel1 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel1.Email.Equals(User.Identity.Name))
                 {
                     <div class="form-group">
-                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.Label("New Status", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-10">
                             @{
                                 var selectList = new SelectList(
@@ -109,6 +109,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.Label("Notes", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-offset-2 col-md-10">
                             @Html.EditorFor(model => model.Level1Notes, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -136,7 +137,7 @@
                 else if (Model.StatusLevel2 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel2.Email.Equals(User.Identity.Name))
                 {
                     <div class="form-group">
-                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.Label("New Status", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-10">
                             @{
                                 var selectList = new SelectList(
@@ -151,6 +152,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.Label("Notes", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-offset-2 col-md-10">
                             @Html.EditorFor(model => model.Level2Notes, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -179,7 +181,7 @@
                 {
 
                     <div class="form-group">
-                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.Label("New Status", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-10">
                             @{
                                 var selectList = new SelectList(
@@ -194,6 +196,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.Label("Notes", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-offset-2 col-md-10">
                             @Html.EditorFor(model => model.Level3Notes, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -221,7 +224,7 @@
                 else if (Model.StatusLevel4 == CongressoApp.Models.ApproveStatus.WAITING && Model.ApproverLevel4.Email.Equals(User.Identity.Name))
                 {
                     <div class="form-group">
-                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.Label("New Status", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-10">
                             @{
                                 var selectList = new SelectList(
@@ -236,6 +239,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.Label("Notes", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-offset-2 col-md-10">
                             @Html.EditorFor(model => model.Level4Notes, new { htmlAttributes = new { @class = "form-control" } })
                         </div>

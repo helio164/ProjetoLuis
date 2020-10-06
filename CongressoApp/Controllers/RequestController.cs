@@ -46,10 +46,18 @@ namespace CongressoApp.Controllers
         public ActionResult Index()
         {
             var LoggedUser = db.Users.Where(u => u.Email.Equals(User.Identity.Name)).First();
-            List<Request> requests = db.Requests.Include("CreatedBy").Where(x => !x.Deleted && x.Active && (x.CreatedBy.Id == LoggedUser.Id || x.ApproverLevel1.Id == LoggedUser.Id || x.ApproverLevel2.Id == LoggedUser.Id || x.ApproverLevel3.Id == LoggedUser.Id || x.ApproverLevel4.Id == LoggedUser.Id)).ToList();
+            List<Request> requests;
+            if (LoggedUser.UserCategory== UserCategory.ADM || LoggedUser.UserCategory == UserCategory.DM || LoggedUser.UserCategory == UserCategory.SA)
+            {
+                requests = db.Requests.Include("CreatedBy").Where(x => !x.Deleted && x.Active).ToList();
+            }
+            else
+            {
+                requests = db.Requests.Include("CreatedBy").Where(x => !x.Deleted && x.Active && (x.CreatedBy.Id == LoggedUser.Id || x.ApproverLevel1.Id == LoggedUser.Id || x.ApproverLevel2.Id == LoggedUser.Id || x.ApproverLevel3.Id == LoggedUser.Id || x.ApproverLevel4.Id == LoggedUser.Id)).ToList();
+            }
             RequestsIndexViewModel model = new RequestsIndexViewModel
             {
-                Accepted = requests.Where(x => x.StatusLevel4 == 0).OrderByDescending(x => x.Date).ToList(),
+                Accepted = requests.Where(x => x.CurrentLevel == 5).OrderByDescending(x => x.Date).ToList(),
                 Level4 = requests.Where(x => x.CurrentLevel == 4).OrderByDescending(x => x.Date).ToList(),
                 Level3 = requests.Where(x => x.CurrentLevel == 3).OrderByDescending(x => x.Date).ToList(),
                 Level2 = requests.Where(x => x.CurrentLevel == 2).OrderByDescending(x => x.Date).ToList(),
@@ -245,32 +253,42 @@ namespace CongressoApp.Controllers
                     switch (LoggedUser.UserCategory)
                     {
                         case UserCategory.ADM:
+                            request.StatusLevel4 = ApproveStatus.APPROVED;
+                            request.ApproverLevel4 = request.ApproverLevel4 != null ? request.ApproverLevel4 : LoggedUser;
+                            request.CurrentLevel = 5;
+                            request.StatusLevel3 = ApproveStatus.APPROVED;
+                            request.ApproverLevel3 = request.ApproverLevel3 != null ? request.ApproverLevel3 : LoggedUser;
+                            request.StatusLevel2 = ApproveStatus.APPROVED;
+                            request.ApproverLevel2 = request.ApproverLevel2 != null ? request.ApproverLevel2 : LoggedUser;
+                            request.StatusLevel1 = ApproveStatus.APPROVED;
+                            request.ApproverLevel1 = request.ApproverLevel1 != null ? request.ApproverLevel1 : LoggedUser;
+                            break;
                         case UserCategory.DM:
                             request.StatusLevel4 = ApproveStatus.WAITING;
                             request.ApproverLevel4 = Approver;
                             request.CurrentLevel = (int)UserCategory.ADM;
                             request.StatusLevel3 = ApproveStatus.APPROVED;
-                            request.ApproverLevel3 = request.CreatedBy;
+                            request.ApproverLevel3 = request.ApproverLevel3 != null ? request.ApproverLevel3 : LoggedUser;
                             request.StatusLevel2 = ApproveStatus.APPROVED;
-                            request.ApproverLevel2 = request.CreatedBy;
+                            request.ApproverLevel2 = request.ApproverLevel2 != null ? request.ApproverLevel2 : LoggedUser;
                             request.StatusLevel1 = ApproveStatus.APPROVED;
-                            request.ApproverLevel1 = request.CreatedBy;
+                            request.ApproverLevel1 = request.ApproverLevel1 != null ? request.ApproverLevel1 : LoggedUser;
                             break;
                         case UserCategory.GP:
                             request.StatusLevel3 = ApproveStatus.WAITING;
                             request.ApproverLevel3 = Approver;
                             request.CurrentLevel = (int)UserCategory.DM;
                             request.StatusLevel2 = ApproveStatus.APPROVED;
-                            request.ApproverLevel2 = request.CreatedBy;
+                            request.ApproverLevel2 = request.ApproverLevel2 != null ? request.ApproverLevel2 : LoggedUser;
                             request.StatusLevel1 = ApproveStatus.APPROVED;
-                            request.ApproverLevel1 = request.CreatedBy;
+                            request.ApproverLevel1 = request.ApproverLevel1 != null ? request.ApproverLevel1 : LoggedUser;
                             break;
                         case UserCategory.GRV:
                             request.StatusLevel2 = ApproveStatus.WAITING;
                             request.ApproverLevel2 = Approver;
                             request.CurrentLevel = (int)UserCategory.GP;
                             request.StatusLevel1 = ApproveStatus.APPROVED;
-                            request.ApproverLevel1 = request.CreatedBy;
+                            request.ApproverLevel1 = request.ApproverLevel1 != null ? request.ApproverLevel1 : LoggedUser;
                             break;
                         case UserCategory.DEL:
                         default:
